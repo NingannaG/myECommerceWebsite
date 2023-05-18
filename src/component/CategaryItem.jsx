@@ -23,7 +23,7 @@ const CategaryItem = ({item}) => {
     `
     const Image = styled.img`
     width:100%;
-    hight:100%;
+    height:100%;
     object-fit:cover;
     `
     const Title = styled.h4`

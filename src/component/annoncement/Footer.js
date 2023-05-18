@@ -87,16 +87,16 @@ const Footer = () => {
                 </Desc>
                 <Social>
                     <Socialicon color="3B5999">
-                    <i class="bi bi-facebook"></i>
+                    <i className="bi bi-facebook"></i>
                     </Socialicon>
                     <Socialicon color="E4405F">
-                    <i class="bi bi-whatsapp"></i>
+                    <i className="bi bi-whatsapp"></i>
                     </Socialicon>
                     <Socialicon color="55ACEE">
-                    <i class="bi bi-instagram"></i>
+                    <i className="bi bi-instagram"></i>
                     </Socialicon>
                     <Socialicon color="E60023">
-                    <i class="bi bi-twitter"></i>
+                    <i className="bi bi-twitter"></i>
                     </Socialicon>
 
                 </Social>
@@ -122,16 +122,16 @@ const Footer = () => {
                 Contact
             </Title>
                 <ContactItem>
-                <i class="bi bi-geo-alt-fill" style={{margin:"10px"}}></i>
+                <i className="bi bi-geo-alt-fill" style={{margin:"10px"}}></i>
                 622 Dixie Path, South Tobinechester 98336
 
                 </ContactItem>
                 <ContactItem>
-                <i class="bi bi-telephone-inbound" style={{margin:"10px"}}></i>
+                <i className="bi bi-telephone-inbound" style={{margin:"10px"}}></i>
                     +918669811356
                 </ContactItem>
                 <ContactItem >
-                <i class="bi bi-envelope" style={{margin:"10px"}}></i>
+                <i className="bi bi-envelope" style={{margin:"10px"}}></i>
                     Ninganna@gmail.com
                 </ContactItem>
                 <Payement src="https://www.pngmart.com/files/7/Payment-Background-PNG.png"/>

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { catagary } from './slider/data'
+import { catagary } from './data'
 import CategaryItem from './CategaryItem'
 
 const Categary = () => {
