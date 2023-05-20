@@ -15,14 +15,16 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Product from './component/Product';
 import { Redirect } from 'react-router-dom/cjs/react-router-dom';
 import Filter from './pages/slider/Filter';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './pages/annoncement/store';
 import Success from './pages/navbar/Success';
 
 function App() {
   const user = false;
+  const users=useSelector((state) => state.user.currentUser);
+  console.log(users)
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -59,7 +61,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </Provider>
+    // </Provider>
   );
 }
 

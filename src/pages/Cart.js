@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout';
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import {userRequest} from "./slider/reqestMethod"
+import { userRequest } from "./slider/reqestMethod"
 
-const KEY = process.env.STRIPE_SECRET_KEY_MY;
+const KEY=process.env.REACT_APP_STRIPE
 const Container = styled.div``
 const Wrapper = styled.div`
 
@@ -151,26 +151,29 @@ width:100%
 const Cart = () => {
     const cart = useSelector(state => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
-    const history=useHistory();
+    const history = useHistory();
     const onToken = (token) => {
         setStripeToken(token);
 
     }
-    useEffect(()=>{
-        const makeRequest=async ()=>{
-            try{
-                const res=await userRequest.post("/checkout/payment",{
-                    tokenId:stripeToken.id,
-                    amount:cart.total*100,
+    console.log(stripeToken);
+    useEffect(() => {
+        const makeRequest = async () => {
+            try {
+                const res = await userRequest.post("/checkout/payment", {
+                    tokenId: stripeToken.id,
+                    amount: cart.total * 100,
                 });
-                history.push("/success",{data:res.data});
+                history.push("/success", 
+                { stripeData: res.data,
+                products:cart });
 
-            }catch{
-                console.log("error")
+            } catch (err){
+                console.log(err)
             }
         };
         stripeToken && makeRequest();
-    },[stripeToken,cart.total,history])
+    }, [stripeToken, cart.total, history])
 
     return (
         <Container>
@@ -272,7 +275,7 @@ const Cart = () => {
                         </SummaryItem>
                         <StripeCheckout
                             name="Ninganna"
-                            image="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                            image="https://avatars.githubusercontent.com/u/1486366?v=4"
                             billingAddress
                             shippingAddress
                             description={`Your total is $${cart.total}`}

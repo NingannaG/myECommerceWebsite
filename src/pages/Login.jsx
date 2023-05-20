@@ -1,6 +1,9 @@
 import React from 'react'
+import { useState } from 'react'
 // import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { login } from '../redux/apiCalls'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const Container = styled.div`
@@ -54,9 +57,23 @@ background-color: teal;
 color: white;
 cursor: pointer;
 margin-bottom: 10px;
+&:disabled{
+  color: green;
+  cursor: not-allowed;
+}
 `
 
-const Register = () => {
+const Login = () => {
+  const [username,setUsername]=useState("");
+  const [password,setPassword]=useState("");
+  const dispatch=useDispatch();
+  const {isFetching,error}=useSelector((state)=>state.user)
+  
+
+  const handleClick=(e)=>{
+    e.preventDefault();
+    login(dispatch, { username , password })
+  }
   return (
     <Container>
       <Wrapper>
@@ -64,9 +81,9 @@ const Register = () => {
          Sign In
         </Title>
         <Form>
-          <Input placeholder="Username"/>
-          <Input placeholder="Password"/>
-          <Button>LOG IN</Button>
+          <Input placeholder="Username" onChange={(e)=>setUsername(e.target.value)}/>
+          <Input placeholder="Password" type='password' onChange={(e)=>setPassword(e.target.value)}/>
+          <Button onClick={handleClick} >LOG IN</Button>
           <Link>DO NOT YOU REMEMBER THE PASSWORD ?
           </Link>
           <Link>
@@ -78,4 +95,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default Login

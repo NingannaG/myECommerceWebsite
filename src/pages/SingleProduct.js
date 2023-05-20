@@ -7,7 +7,7 @@ import Newsletter from '../component/Newsletter'
 import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { publicReqest } from "../pages/slider/reqestMethod"
+import { publicRequest } from "../pages/slider/reqestMethod"
 import { useDispatch } from 'react-redux'
 import { addProduct } from './annoncement/cartRedux'
 
@@ -90,7 +90,7 @@ const SingleProduct = () => {
    useEffect(() => {
       const getProduct = async () => {
          try {
-            const res = await publicReqest.get("/products/find/" + id);
+            const res = await publicRequest.get("/products/find/" + id);
             setProduct(res.data);
             /* console.log(res.data.color) */
 

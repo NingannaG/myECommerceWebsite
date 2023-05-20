@@ -1,4 +1,5 @@
-const order = require("../modals/Order");
+const Order = require("../modals/Order");
+// const order = require("../modals/Order");
 const { verifyTokenAndAUthorization, verifyTokenAndAdmin } = require("./verify");
 
 const router = require("express").Router();
@@ -6,7 +7,7 @@ const router = require("express").Router();
 //UPDATE
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
-        const updatedOrder = await order.findByIdAndUpdate(
+        const updatedOrder = await Order.findByIdAndUpdate(
             req.params.id,
             {
                 $set: req.body,
@@ -22,17 +23,17 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 // //DELETE
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
     try {
-        await order.findByIdAndDelete(req.params.id);
+        await Order.findByIdAndDelete(req.params.id);
         res.status(200).json("Order has been deleted...");
     } catch (err) {
         res.status(500).json(err);
     }
 });
 
-//GET USER oders
+// GET USER oders
 router.get("/find/:userId", verifyTokenAndAdmin, async (req, res) => {
     try {
-        const order = await order.find({userId: req.params.userId});
+        const order = await Order.find({userId: req.params.userId});
         res.status(200).json(order);
     } catch (err) {
         res.status(500).json(err);
@@ -42,8 +43,8 @@ router.get("/find/:userId", verifyTokenAndAdmin, async (req, res) => {
 // //GET ALL
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
     try {
-        const order = await order.find();
-        res.status(200).json(order);
+        const order12 = await Order.find();
+        res.status(200).json(order12);
     } catch (err) {
         res.status(500).json(err);
     }
@@ -51,7 +52,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
 //new order
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
-    const newOrder = new order(req.body)
+    const newOrder = new Order(req.body)
     try {
         const savedData = await newOrder.save();
         res.status(200).json(savedData)
@@ -67,7 +68,7 @@ router.get("/income", verifyTokenAndAUthorization, async (req, res) => {
     const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
   
     try {
-      const income = await order.aggregate([
+      const income = await Order.aggregate([
         { $match: { createdAt: { $gte: previousMonth } } },
         {
           $project: {
