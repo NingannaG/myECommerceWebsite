@@ -62,12 +62,15 @@ margin-bottom: 10px;
   cursor: not-allowed;
 }
 `
+const Error=styled.span`
+  color:red;
+`
 
 const Login = () => {
   const [username,setUsername]=useState("");
   const [password,setPassword]=useState("");
   const dispatch=useDispatch();
-  const {isFetching,error}=useSelector((state)=>state.user)
+  const {currentUser,isFetching,error}=useSelector((state)=>state.user)
   
 
   const handleClick=(e)=>{
@@ -83,7 +86,12 @@ const Login = () => {
         <Form>
           <Input placeholder="Username" onChange={(e)=>setUsername(e.target.value)}/>
           <Input placeholder="Password" type='password' onChange={(e)=>setPassword(e.target.value)}/>
-          <Button onClick={handleClick} >LOG IN</Button>
+          <Button onClick={handleClick} disabled={isFetching}>LOG IN</Button>
+          {
+            error && <Error>Some Thing went wrong</Error>
+
+            
+          }
           <Link>DO NOT YOU REMEMBER THE PASSWORD ?
           </Link>
           <Link>

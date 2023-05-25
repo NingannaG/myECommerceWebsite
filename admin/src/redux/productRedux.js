@@ -45,8 +45,9 @@ export const productSlice = createSlice({
     updateProductSuccess: (state, action) => {
       state.isFetching = false;
       state.products[
-        state.products.findIndex((item) => item._id === action.payload.id)
-      ] = action.payload.product;
+        state.products.findIndex((item) => item._id === action.payload.data._id)
+      ] = action.payload.data;
+      console.log(action.payload.data);
     },
     updateProductFailure: (state) => {
       state.isFetching = false;

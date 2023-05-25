@@ -3,19 +3,28 @@ import "./product.css";
 import Chart from "../../components/chart/Chart";
 import { productData } from "../../dummyData";
 import { Publish } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { userRequest } from "../../requestMethods";
+import {updateProduct} from "../../redux/apiCalls"
 
 export default function Product() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
   const [pStats, setPStats] = useState([]);
+  const [inputs,setInputs]=useState();
+  const dispatch=useDispatch();
 
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
   );
-
+  const handleChange = (e) => {
+    // console.log(inputs);
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+  
   const MONTHS = useMemo(
     () => [
       "Jan",
@@ -33,26 +42,34 @@ export default function Product() {
     ],
     []
   );
-
-  useEffect(() => {
-    const getStats = async () => {
-      try {
-        const res = await userRequest.get("orders/income?pid=" + productId);
-        const list = res.data.sort((a,b)=>{
-            return a._id - b._id
-        })
-        list.map((item) =>
-          setPStats((prev) => [
-            ...prev,
-            { name: MONTHS[item._id - 1], Sales: item.total },
-          ])
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getStats();
-  }, [productId, MONTHS]);
+  
+  // useEffect(() => {
+    //   const getStats = async () => {
+      //     try {
+        //       const res = await userRequest.get("order/income?pid=" + productId);
+        //       const list = res.data.sort((a,b)=>{
+          //           return a._id - b._id
+  //       })
+  //       list.map((item) =>
+  //         setPStats((prev) => [
+  //           ...prev,
+  //           { name: MONTHS[item._id - 1], Sales: item.total },
+  //         ])
+  //       );
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getStats();
+  // }, [productId, MONTHS]);
+  const handleClick=(e)=>{
+    e.preventDefault();
+  updateProduct(productId,inputs,dispatch);
+  console.log(inputs)
+  console.log(product)
+  
+  
+  }
 
   return (
     <div className="product">
@@ -91,11 +108,11 @@ export default function Product() {
         <form className="productForm">
           <div className="productFormLeft">
             <label>Product Name</label>
-            <input type="text" placeholder={product.title} />
+            <input type="text" placeholder={product.title} name="title" onChange={handleChange}/>
             <label>Product Description</label>
-            <input type="text" placeholder={product.desc} />
+            <input type="text" placeholder={product.desc} name="desc" onClick={handleChange}/>
             <label>Price</label>
-            <input type="text" placeholder={product.price} />
+            <input type="text" placeholder={product.price} name="price" onClick={handleChange}/>
             <label>In Stock</label>
             <select name="inStock" id="idStock">
               <option value="true">Yes</option>
@@ -110,7 +127,7 @@ export default function Product() {
               </label>
               <input type="file" id="file" style={{ display: "none" }} />
             </div>
-            <button className="productButton">Update</button>
+            <button onClick={handleClick} className="updateProductButton">update</button>
           </div>
         </form>
       </div>

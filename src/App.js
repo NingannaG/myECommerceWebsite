@@ -20,9 +20,9 @@ import store from './pages/annoncement/store';
 import Success from './pages/navbar/Success';
 
 function App() {
-  const user = false;
-  const users=useSelector((state) => state.user.currentUser);
-  console.log(users)
+  const users = false;
+  const user=useSelector((state) => state.user.currentUser);
+  console.log(user)
   return (
     // <Provider store={store}>
       <Router>
