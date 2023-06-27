@@ -1,12 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import './navbar.css'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom/cjs/react-router-dom.min'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import {logout} from "../../redux/userRedux"
+import { Redirect } from 'react-router-dom'
 
 const Navbar = () => {
   const cart=useSelector(state=>state.cart.quantity);
-  console.log(cart)
+  const [user,setUser]=useState();
+  let currentUser=useSelector(state=>state.user.currentUser);
+  const dispatch=useDispatch();
+  // if(currentUser!==null){
+  //   setUser(true);
+  //   console.log(currentUser)
+  // }
+  // else{
+  //   setUser(false);
+  //   console.log(currentUser)
+  // }
+  const hancleClick=()=>{
+    dispatch(logout());
+    console.log("clicked")
+  }
   return (
     <div className='container'>
       <div className="wrapper">
@@ -20,10 +36,25 @@ const Navbar = () => {
           </div>
 
         </div>
-        <div className="center">Ninganna</div>
+        <Link to="/" style={{textDecoration:"none"}}>
+        <div className="center" style={{cursor:"pointer"}}>Ninganna</div>
+        </Link>
         <div className="right">
-          <div className='menu'>Resister</div>
-          <div className='menu'>Sign In</div>
+          {currentUser ? 
+          <Link to="/login">
+            <div className='menu' onClick={hancleClick}>Logout</div>
+          </Link>
+            
+          :
+          <>
+          <Link to="/register" style={{textDecoration:"none"}}>            
+          <div className='menu' >Resister</div>
+          </Link>
+          <Link to="/login" style={{"textDecoration":"none"}}>
+            <div className='menu'>Sign In</div>
+          </Link>
+          </> 
+          }
           <Link to="/cart">
           <div className='menu'>
             <i className="bi bi-cart"></i>

@@ -131,8 +131,8 @@ const Footer = () => {
                     +918669811356
                 </ContactItem>
                 <ContactItem >
-                <i className="bi bi-envelope" style={{margin:"10px"}}></i>
-                    Ninganna@gmail.com
+                    <a href='mailto:Ninganna@gmail.com' style={{textDecoration:"none"}}>
+                <i className="bi bi-envelope" style={{margin:"10px"}}></i>Ninganna@gmail.com</a>
                 </ContactItem>
                 <Payement src="https://www.pngmart.com/files/7/Payment-Background-PNG.png"/>
             </Right>

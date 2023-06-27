@@ -21,9 +21,11 @@ const ProductSchema=new mongoose.Schema(
     },
     size:{
      type:Array,
+     default:"M"
      },
      color:{
         type:Array,
+        default:"Black"
      },
      price:{
         type:Number,

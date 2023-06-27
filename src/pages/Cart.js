@@ -8,6 +8,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { userRequest } from "./slider/reqestMethod"
+import {Link} from "react-router-dom"
 
 const KEY=process.env.REACT_APP_STRIPE
 const Container = styled.div``
@@ -150,6 +151,7 @@ width:100%
 
 const Cart = () => {
     const cart = useSelector(state => state.cart);
+    console.log(cart);
     const [stripeToken, setStripeToken] = useState(null);
     const history = useHistory();
     const onToken = (token) => {
@@ -184,20 +186,33 @@ const Cart = () => {
                     YOUR BAG
                 </Title>
                 <Top>
-                    <TopButton>
-                        CONTINUE SHOPPING
-                    </TopButton>
+                <Link to="/" style={{textDecoration:"none"}}>
+                <TopButton>
+                CONTINUE SHOPPING
+                </TopButton>
+                </Link>
                     <TopTexts>
                         <TopText>
-                            Shoppting Bag (0)
+                            Shoppting Bag ({cart.quantity})
                         </TopText>
                         <TopText>
                             Your Wishlist (0)
                         </TopText>
                     </TopTexts>
+                    <StripeCheckout
+                    name="Ninganna"
+                            image="https://avatars.githubusercontent.com/u/1486366?v=4"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $${cart.total}`}
+                            amount={cart.total * 100}
+                            token={onToken}
+                            stripeKey={KEY}
+                    >
                     <TopButton type="filled">
-                        CHECKOUT NOW
+                    CHECKOUT NOW
                     </TopButton>
+                    </StripeCheckout>
                 </Top>
                 <Bottom>
                     <Info>
